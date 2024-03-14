@@ -25,7 +25,7 @@ class garmin_dogView extends WatchUi.View {
         // responseCode = responseCode;
         if (responseCode == 200) {
             var name = leftpad3(imgId);
-            System.println("img response success: " + name);
+            System.println("img response success: " + data);
             // Application.Storage.setValue(name, data);
             _frame = data;
             WatchUi.requestUpdate();
@@ -40,7 +40,7 @@ class garmin_dogView extends WatchUi.View {
     }
 
     function makeImgRequest() {
-        var url = "https://dummyimage.com/256x256/8c318c/b6b8cf.gif&text=" + leftpad3(imgId);           // set the image url
+        var url = "https://raw.githubusercontent.com/sashjakk/garmin-dog/images/frame_0" + imgId + ".jpg";           // set the image url
         var options = {  
             :dithering => Communications.IMAGE_DITHERING_NONE   // set the dithering
         };
