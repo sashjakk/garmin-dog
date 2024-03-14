@@ -1,7 +1,64 @@
 import Toybox.Graphics;
 import Toybox.WatchUi;
+using Toybox.System;
+import Toybox.Lang;
+using Toybox.Communications;
 
 class garmin_dogView extends WatchUi.View {
+
+    var image;
+    var responseCode;
+
+    function responseCallback(
+        responseCode as Number,
+        data as WatchUi.BitmapResource or Graphics.BitmapReference or Null
+    ) {
+        responseCode = responseCode;
+        if (responseCode == 200) {
+            System.println("img response success " + data);
+            image = data;
+        } else {
+            System.println("http response fail " + responseCode + " " + data);
+            image = null;
+        }
+    }
+
+    function makeImgRequest() {
+        var url = "https://static.garmincdn.com/com.garmin/ui/images/logo/garmin_logo_on_w.png";           // set the image url
+        var options = {          
+            :maxWidth => 100,                                   // set the max width
+            :maxHeight => 100,                                  // set the max height
+            :dithering => Communications.IMAGE_DITHERING_NONE   // set the dithering
+        };
+
+        // Make the image request
+        Communications.makeImageRequest(url, null, options, method(:responseCallback));
+    }
+
+    ///////////////////
+
+
+    // function onReceive(
+    //     responseCode as Number,
+    //     data as Dictionary<String, Object?> or String or Null
+    // ) as Void {
+    //     if (responseCode == 200) {
+    //         System.println("http response success " + data);
+    //     } else {
+    //         System.println("http response fail");
+    //     }
+    // }
+
+    // function makeRequest() {
+    //    var url = "https://dummyjson.com/products/1";
+    //    var options = {                                             // set the options
+    //        :method => Communications.HTTP_REQUEST_METHOD_GET,      // set HTTP method
+    //        :headers => { "Content-Type" => Communications.REQUEST_CONTENT_TYPE_URL_ENCODED },
+    //                                                                // set response type
+    //        :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
+    //    };
+    //    Communications.makeWebRequest(url, {}, options, method(:onReceive));
+    // }
 
     function initialize() {
         View.initialize();
@@ -16,6 +73,7 @@ class garmin_dogView extends WatchUi.View {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() as Void {
+        makeImgRequest();
     }
 
     // Update the view

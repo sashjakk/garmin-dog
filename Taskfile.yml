@@ -10,7 +10,7 @@ tasks:
     - resources/**/*
     - source/**/*.mc
     cmds:
-    - "{{.SDK_BIN}}/monkeyc -f {{.JUNGLE_FILE}} -o ./bin/{{.APP_NAME}}.prg -y {{.DEV_KEY}} -d {{default .DEVICE .CLI_ARGS}}"
+    - "{{.SDK_BIN}}/monkeyc -l 0 -f {{.JUNGLE_FILE}} -o ./bin/{{.APP_NAME}}.prg -y {{.DEV_KEY}} -d {{default .DEVICE .CLI_ARGS}}"
 
   dev:
     deps: 
