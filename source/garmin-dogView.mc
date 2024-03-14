@@ -14,25 +14,29 @@ var startDraw = false;
 
 class garmin_dogView extends WatchUi.View {
 
+    var _frame;
+
     var responseCode;
 
     function responseCallback(
         responseCode as Number,
         data as WatchUi.BitmapResource or Graphics.BitmapReference or Null
     ) {
-        responseCode = responseCode;
+        // responseCode = responseCode;
         if (responseCode == 200) {
             var name = leftpad3(imgId);
             System.println("img response success: " + name);
-            Application.Storage.setValue(name, data);
+            // Application.Storage.setValue(name, data);
+            _frame = data;
+            WatchUi.requestUpdate();
         } else {
             System.println("http response fail " + responseCode + " " + data);
         }
 
-        imgId = imgId + 1;
-        if (imgId < maxImgCount) {
+        // imgId = imgId + 1;
+        // if (imgId < maxImgCount) {
             makeImgRequest();
-        }
+        // }
     }
 
     function makeImgRequest() {
@@ -43,6 +47,8 @@ class garmin_dogView extends WatchUi.View {
 
         // Make the image request
         Communications.makeImageRequest(url, {}, options, method(:responseCallback));
+
+        imgId = imgId + 1;
     }
 
     function initialize() {
@@ -50,8 +56,8 @@ class garmin_dogView extends WatchUi.View {
 
         makeImgRequest();
 
-         myTimer = new Timer.Timer();
-        myTimer.start(method(:doUpdate), 100, true);
+        //  myTimer = new Timer.Timer();
+        // myTimer.start(method(:doUpdate), 100, true);
     }
 
     // Load your resources here
@@ -81,15 +87,15 @@ class garmin_dogView extends WatchUi.View {
     }
 
     function render(dc as Dc) {
-        var fromStorage = Application.Storage.getValue(leftpad3(drawId));
-        if (fromStorage == null) {
+        // var fromStorage = Application.Storage.getValue(leftpad3(drawId));
+        if (_frame == null) {
             return;
         }
         
         dc.drawBitmap(
             dc.getWidth() / 2 - 128,
             dc.getHeight() / 2 - 128,
-            fromStorage
+            _frame
         );
 
         drawId = (drawId + 1) % maxImgCount;
