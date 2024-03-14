@@ -1,144 +1,62 @@
 import Toybox.Graphics;
 import Toybox.WatchUi;
-using Toybox.System;
+import Toybox.System;
 import Toybox.Lang;
-using Toybox.Communications;
-using Toybox.Timer;
-
-var imgId as Number = 0;
-var maxImgCount = 10;
-
-var myTimer;
-var drawId = 0;
-var startDraw = false;
+import Toybox.Communications;
+import Toybox.Timer;
 
 class garmin_dogView extends WatchUi.View {
+    static const FRAME_COUNT = 60;
 
-    var _frame;
+    var frameId as Number = 1;
+    var frame as Graphics.BitmapReference or Null;
 
-    var responseCode;
-
-    function responseCallback(
-        responseCode as Number,
-        data as WatchUi.BitmapResource or Graphics.BitmapReference or Null
-    ) {
-        // responseCode = responseCode;
-        if (responseCode == 200) {
-            var name = leftpad3(imgId);
-            System.println("img response success: " + data);
-            // Application.Storage.setValue(name, data);
-            _frame = data;
-            WatchUi.requestUpdate();
-        } else {
-            System.println("http response fail " + responseCode + " " + data);
-        }
-
-        // imgId = imgId + 1;
-        // if (imgId < maxImgCount) {
-            makeImgRequest();
-        // }
+    function onShow() {
+        requestFrame();
     }
 
-    function makeImgRequest() {
-        var url = "https://raw.githubusercontent.com/sashjakk/garmin-dog/main/images/frame_0" + leftpad3(imgId) + ".jpg";           // set the image url
-        var options = {  
-            :dithering => Communications.IMAGE_DITHERING_NONE   // set the dithering
-        };
-
-        // Make the image request
-        Communications.makeImageRequest(url, {}, options, method(:responseCallback));
-
-        imgId = imgId + 1;
-    }
-
-    function initialize() {
-        View.initialize();
-
-        makeImgRequest();
-
-        //  myTimer = new Timer.Timer();
-        // myTimer.start(method(:doUpdate), 100, true);
-    }
-
-    // Load your resources here
-    function onLayout(dc as Dc) as Void {
-        // setLayout(Rez.Layouts.MainLayout(dc));
-    }
-
-    // Called when this View is brought to the foreground. Restore
-    // the state of this View and prepare it to be shown. This includes
-    // loading resources into memory.
-    function onShow() as Void {
-       
-    }
-
-    function doUpdate() {
-        WatchUi.requestUpdate();
-    }
-
-    // Update the view
     function onUpdate(dc as Dc) as Void {
-        // Call the parent onUpdate function to redraw the layout
-        // View.onUpdate(dc);
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
+        dc.clear();
 
-        render(dc);
-    
-
-    }
-
-    function render(dc as Dc) {
-        // var fromStorage = Application.Storage.getValue(leftpad3(drawId));
-        if (_frame == null) {
+        if (frame == null) {
             return;
         }
-        
-        dc.drawBitmap(
-            dc.getWidth() / 2 - 128,
-            dc.getHeight() / 2 - 128,
-            _frame
+
+        var x = (dc.getWidth() - frame.getWidth()) / 2;
+        var y = (dc.getHeight() - frame.getHeight()) / 2;
+        dc.drawBitmap(x, y, frame);
+    }
+
+    function onResponse(
+        code as Number,
+        data as WatchUi.BitmapResource or Graphics.BitmapReference or Null
+    ) {
+        System.println("[http] code: " + code + ", frame id: " + frameId + ", data: " + data + "\n");
+
+        if (code == 200) {
+            frame = data;
+            WatchUi.requestUpdate();
+        }
+
+        requestFrame();
+    }
+    
+    function requestFrame() {
+        var url = Lang.format(
+            "https://raw.githubusercontent.com/sashjakk/garmin-dog/main/images/frame_$1$.jpg", 
+            [frameId.format("%04d")]
         );
 
-        drawId = (drawId + 1) % maxImgCount;
-    }
+        var options = {  
+            :dithering => Communications.IMAGE_DITHERING_NONE
+        };
 
-    // Called when this View is removed from the screen. Save the
-    // state of this View here. This includes freeing resources from
-    // memory.
-    function onHide() as Void {
-    }
+        System.println("[http] frame id: " + frameId + ", url: " + url);
 
-    function leftpad3(i as Number) as String {
-        var str = "" + (i % 1000);
-        if (str.length() == 1) {
-            return "00" + str;
-        } else if(str.length() == 2) {
-            return "0" + str;
-        } else {
-            return str;
-        }
-    }
+        Communications
+            .makeImageRequest(url, {}, options, method(:onResponse));
 
+        frameId = (frameId % garmin_dogView.FRAME_COUNT) + 1;
+    }
 }
-
-
-// function onReceive(
-    //     responseCode as Number,
-    //     data as Dictionary<String, Object?> or String or Null
-    // ) as Void {
-    //     if (responseCode == 200) {
-    //         System.println("http response success " + data);
-    //     } else {
-    //         System.println("http response fail");
-    //     }
-    // }
-
-    // function makeRequest() {
-    //    var url = "https://dummyjson.com/products/1";
-    //    var options = {                                             // set the options
-    //        :method => Communications.HTTP_REQUEST_METHOD_GET,      // set HTTP method
-    //        :headers => { "Content-Type" => Communications.REQUEST_CONTENT_TYPE_URL_ENCODED },
-    //                                                                // set response type
-    //        :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
-    //    };
-    //    Communications.makeWebRequest(url, {}, options, method(:onReceive));
-    // }
