@@ -40,7 +40,7 @@ class garmin_dogView extends WatchUi.View {
     }
 
     function makeImgRequest() {
-        var url = "https://raw.githubusercontent.com/sashjakk/garmin-dog/images/frame_0" + imgId + ".jpg";           // set the image url
+        var url = "https://raw.githubusercontent.com/sashjakk/garmin-dog/main/images/frame_0" + leftpad3(imgId) + ".jpg";           // set the image url
         var options = {  
             :dithering => Communications.IMAGE_DITHERING_NONE   // set the dithering
         };
