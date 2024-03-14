@@ -47,6 +47,11 @@ class garmin_dogView extends WatchUi.View {
 
     function initialize() {
         View.initialize();
+
+        makeImgRequest();
+
+         myTimer = new Timer.Timer();
+        myTimer.start(method(:doUpdate), 100, true);
     }
 
     // Load your resources here
@@ -58,10 +63,7 @@ class garmin_dogView extends WatchUi.View {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() as Void {
-        // makeImgRequest();
-
-        myTimer = new Timer.Timer();
-        myTimer.start(method(:doUpdate), 100, true);
+       
     }
 
     function doUpdate() {
@@ -71,7 +73,7 @@ class garmin_dogView extends WatchUi.View {
     // Update the view
     function onUpdate(dc as Dc) as Void {
         // Call the parent onUpdate function to redraw the layout
-        View.onUpdate(dc);
+        // View.onUpdate(dc);
 
         render(dc);
     
@@ -80,6 +82,10 @@ class garmin_dogView extends WatchUi.View {
 
     function render(dc as Dc) {
         var fromStorage = Application.Storage.getValue(leftpad3(drawId));
+        if (fromStorage == null) {
+            return;
+        }
+        
         dc.drawBitmap(
             dc.getWidth() / 2 - 128,
             dc.getHeight() / 2 - 128,
