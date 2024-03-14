@@ -1,3 +1,42 @@
 <drawables>
     <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+
+    <bitmap id="frame_001" filename="img/frame_001.jpg" />
+    <bitmap id="frame_002" filename="img/frame_002.jpg" />
+    <bitmap id="frame_003" filename="img/frame_003.jpg" />
+    <bitmap id="frame_004" filename="img/frame_004.jpg" />
+    <bitmap id="frame_005" filename="img/frame_005.jpg" />
+    <bitmap id="frame_006" filename="img/frame_006.jpg" />
+    <bitmap id="frame_007" filename="img/frame_007.jpg" />
+    <bitmap id="frame_008" filename="img/frame_008.jpg" />
+    <bitmap id="frame_009" filename="img/frame_009.jpg" />
+    <bitmap id="frame_010" filename="img/frame_010.jpg" />
+    <bitmap id="frame_011" filename="img/frame_011.jpg" />
+    <bitmap id="frame_012" filename="img/frame_012.jpg" />
+    <bitmap id="frame_013" filename="img/frame_013.jpg" />
+    <bitmap id="frame_014" filename="img/frame_014.jpg" />
+    <bitmap id="frame_015" filename="img/frame_015.jpg" />
+    <bitmap id="frame_016" filename="img/frame_016.jpg" />
+    <bitmap id="frame_017" filename="img/frame_017.jpg" />
+    <bitmap id="frame_018" filename="img/frame_018.jpg" />
+    <bitmap id="frame_019" filename="img/frame_019.jpg" />
+    <bitmap id="frame_020" filename="img/frame_020.jpg" />
+    <bitmap id="frame_021" filename="img/frame_021.jpg" />
+    <bitmap id="frame_022" filename="img/frame_022.jpg" />
+    <bitmap id="frame_023" filename="img/frame_023.jpg" />
+    <bitmap id="frame_024" filename="img/frame_024.jpg" />
+    <bitmap id="frame_025" filename="img/frame_025.jpg" />
+    <bitmap id="frame_026" filename="img/frame_026.jpg" />
+    <bitmap id="frame_027" filename="img/frame_027.jpg" />
+    <bitmap id="frame_028" filename="img/frame_028.jpg" />
+    <bitmap id="frame_029" filename="img/frame_029.jpg" />
+    <bitmap id="frame_030" filename="img/frame_030.jpg" />
+    <bitmap id="frame_031" filename="img/frame_031.jpg" />
+    <bitmap id="frame_032" filename="img/frame_032.jpg" />
+    <bitmap id="frame_033" filename="img/frame_033.jpg" />
+    <bitmap id="frame_034" filename="img/frame_034.jpg" />
+    <bitmap id="frame_035" filename="img/frame_035.jpg" />
+    <bitmap id="frame_036" filename="img/frame_036.jpg" />
+    <bitmap id="frame_037" filename="img/frame_037.jpg" />
+
 </drawables>

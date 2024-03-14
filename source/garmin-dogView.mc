@@ -6,14 +6,14 @@ using Toybox.Communications;
 using Toybox.Timer;
 
 var imgId as Number = 0;
-var maxImgCount = 10;
+var maxImgCount = 37;
 
 var myTimer;
 var drawId = 0;
 var startDraw = false;
 
 class garmin_dogView extends WatchUi.View {
-
+    var imgs = [];
     var _frame;
 
     var responseCode;
@@ -40,7 +40,7 @@ class garmin_dogView extends WatchUi.View {
     }
 
     function makeImgRequest() {
-        var url = "https://raw.githubusercontent.com/sashjakk/garmin-dog/main/images/frame_0" + leftpad3(imgId) + ".jpg";           // set the image url
+        var url = "https://raw.githubusercontent.com/guntisdev/cat_pics/main/img/frame_" + leftpad3(imgId) + ".jpg";           // set the image url
         var options = {  
             :dithering => Communications.IMAGE_DITHERING_NONE   // set the dithering
         };
@@ -54,23 +54,25 @@ class garmin_dogView extends WatchUi.View {
     function initialize() {
         View.initialize();
 
-        makeImgRequest();
+        // makeImgRequest();
 
-        //  myTimer = new Timer.Timer();
-        // myTimer.start(method(:doUpdate), 100, true);
+        myTimer = new Timer.Timer();
+        myTimer.start(method(:doUpdate), 200, true);
     }
 
     // Load your resources here
     function onLayout(dc as Dc) as Void {
         // setLayout(Rez.Layouts.MainLayout(dc));
+        var drawables = [ Rez.Drawables.frame_001, Rez.Drawables.frame_002, Rez.Drawables.frame_003, Rez.Drawables.frame_004, Rez.Drawables.frame_005, Rez.Drawables.frame_006, Rez.Drawables.frame_007, Rez.Drawables.frame_008, Rez.Drawables.frame_009, Rez.Drawables.frame_010, Rez.Drawables.frame_011, Rez.Drawables.frame_012, Rez.Drawables.frame_013, Rez.Drawables.frame_014, Rez.Drawables.frame_015, Rez.Drawables.frame_016, Rez.Drawables.frame_017, Rez.Drawables.frame_018, Rez.Drawables.frame_019, Rez.Drawables.frame_020, Rez.Drawables.frame_021, Rez.Drawables.frame_022, Rez.Drawables.frame_023, Rez.Drawables.frame_024, Rez.Drawables.frame_025, Rez.Drawables.frame_026, Rez.Drawables.frame_027, Rez.Drawables.frame_028, Rez.Drawables.frame_029, Rez.Drawables.frame_030, Rez.Drawables.frame_031, Rez.Drawables.frame_032, Rez.Drawables.frame_033, Rez.Drawables.frame_034, Rez.Drawables.frame_035, Rez.Drawables.frame_036, Rez.Drawables.frame_037];
+        for(var i=0; i<drawables.size(); i++) {
+            imgs.add(Application.loadResource( drawables[i] ) as BitmapResource);
+        }
     }
 
     // Called when this View is brought to the foreground. Restore
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
-    function onShow() as Void {
-       
-    }
+    function onShow() as Void {}
 
     function doUpdate() {
         WatchUi.requestUpdate();
@@ -82,20 +84,18 @@ class garmin_dogView extends WatchUi.View {
         // View.onUpdate(dc);
 
         render(dc);
-    
-
     }
 
     function render(dc as Dc) {
         // var fromStorage = Application.Storage.getValue(leftpad3(drawId));
-        if (_frame == null) {
+        if (imgs[drawId] == null) {
             return;
         }
         
         dc.drawBitmap(
-            dc.getWidth() / 2 - 128,
-            dc.getHeight() / 2 - 128,
-            _frame
+            dc.getWidth() / 2 - 227,
+            dc.getHeight() / 2 - 227,
+            imgs[drawId]
         );
 
         drawId = (drawId + 1) % maxImgCount;
