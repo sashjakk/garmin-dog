@@ -24,15 +24,13 @@ class garmin_dogView extends WatchUi.View {
     }
 
     function makeImgRequest() {
-        var url = "https://static.garmincdn.com/com.garmin/ui/images/logo/garmin_logo_on_w.png";           // set the image url
-        var options = {          
-            :maxWidth => 100,                                   // set the max width
-            :maxHeight => 100,                                  // set the max height
+        var url = "https://dummyimage.com/100x100/8c318c/b6b8cf.gif&text=asdf";           // set the image url
+        var options = {  
             :dithering => Communications.IMAGE_DITHERING_NONE   // set the dithering
         };
 
         // Make the image request
-        Communications.makeImageRequest(url, null, options, method(:responseCallback));
+        Communications.makeImageRequest(url, {}, options, method(:responseCallback));
     }
 
     ///////////////////
