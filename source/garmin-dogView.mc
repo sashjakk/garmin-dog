@@ -4,9 +4,11 @@ using Toybox.System;
 import Toybox.Lang;
 using Toybox.Communications;
 
+var imgId as Number = 0;
+var maxImgCount = 10;
+
 class garmin_dogView extends WatchUi.View {
 
-    var image;
     var responseCode;
 
     function responseCallback(
@@ -15,16 +17,21 @@ class garmin_dogView extends WatchUi.View {
     ) {
         responseCode = responseCode;
         if (responseCode == 200) {
-            System.println("img response success " + data);
-            image = data;
+            var name = leftpad3(imgId);
+            System.println("img response success: " + name);
+            Application.Storage.setValue(name, data);
         } else {
             System.println("http response fail " + responseCode + " " + data);
-            image = null;
+        }
+
+        imgId = imgId + 1;
+        if (imgId < maxImgCount) {
+            makeImgRequest();
         }
     }
 
     function makeImgRequest() {
-        var url = "https://dummyimage.com/100x100/8c318c/b6b8cf.gif&text=asdf";           // set the image url
+        var url = "https://dummyimage.com/256x256/8c318c/b6b8cf.gif&text=" + leftpad3(imgId);           // set the image url
         var options = {  
             :dithering => Communications.IMAGE_DITHERING_NONE   // set the dithering
         };
@@ -72,6 +79,9 @@ class garmin_dogView extends WatchUi.View {
     // loading resources into memory.
     function onShow() as Void {
         makeImgRequest();
+
+        // imgId = imgId + 1;
+        // System.println(leftpad3(imgId));
     }
 
     // Update the view
@@ -84,6 +94,17 @@ class garmin_dogView extends WatchUi.View {
     // state of this View here. This includes freeing resources from
     // memory.
     function onHide() as Void {
+    }
+
+    function leftpad3(i as Number) as String {
+        var str = "" + (i % 1000);
+        if (str.length() == 1) {
+            return "00" + str;
+        } else if(str.length() == 2) {
+            return "0" + str;
+        } else {
+            return str;
+        }
     }
 
 }
