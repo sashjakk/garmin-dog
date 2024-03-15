@@ -55,7 +55,7 @@ class OnlineVideoView extends WatchUi.View {
         }
 
         var url = Lang.format(
-            "https://raw.githubusercontent.com/sashjakk/garmin-dog/main/images/frame_$1$.jpg", 
+            "https://dummyimage.com/256x256/8c318c/b6b8cf.gif&text=$1$",
             [frameId.format("%03d")]
         );
 
