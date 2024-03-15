@@ -1,3 +1,13 @@
 <drawables>
     <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+    <bitmap id="frame_0001" filename="../../images/frame_0001.jpg" />
+    <bitmap id="frame_0002" filename="../../images/frame_0002.jpg" />
+    <bitmap id="frame_0003" filename="../../images/frame_0003.jpg" />
+    <bitmap id="frame_0004" filename="../../images/frame_0004.jpg" />
+    <bitmap id="frame_0005" filename="../../images/frame_0005.jpg" />
+    <bitmap id="frame_0006" filename="../../images/frame_0006.jpg" />
+    <bitmap id="frame_0007" filename="../../images/frame_0007.jpg" />
+    <bitmap id="frame_0008" filename="../../images/frame_0008.jpg" />
+    <bitmap id="frame_0009" filename="../../images/frame_0009.jpg" />
+    <bitmap id="frame_0010" filename="../../images/frame_0010.jpg" />
 </drawables>

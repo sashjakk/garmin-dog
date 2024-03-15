@@ -5,14 +5,21 @@ import Toybox.Lang;
 import Toybox.Communications;
 import Toybox.Timer;
 
-class garmin_dogView extends WatchUi.View {
+class OnlineVideoView extends WatchUi.View {
     static const FRAME_COUNT = 60;
 
     var frameId as Number = 1;
     var frame as Graphics.BitmapReference or Null;
 
+    var isActive = false;
+
     function onShow() {
+        isActive = true;
         requestFrame();
+    }
+
+    function onHide() {
+        isActive = false;
     }
 
     function onUpdate(dc as Dc) as Void {
@@ -43,6 +50,10 @@ class garmin_dogView extends WatchUi.View {
     }
     
     function requestFrame() {
+        if (!isActive) {
+            return;
+        }
+
         var url = Lang.format(
             "https://raw.githubusercontent.com/sashjakk/garmin-dog/main/images/frame_$1$.jpg", 
             [frameId.format("%04d")]
@@ -57,6 +68,6 @@ class garmin_dogView extends WatchUi.View {
         Communications
             .makeImageRequest(url, {}, options, method(:onResponse));
 
-        frameId = (frameId % garmin_dogView.FRAME_COUNT) + 1;
+        frameId = (frameId % OnlineVideoView.FRAME_COUNT) + 1;
     }
 }
