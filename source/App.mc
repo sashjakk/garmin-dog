@@ -18,7 +18,10 @@ class App extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() as Array<Views or InputDelegates>? {
-        return [new OfflineVideoView(), new AppDelegate() ] as Array<Views or InputDelegates>;
+        var menu = makeMenu();
+        var delegate = new MenuDelegate();
+        
+        return [menu, delegate] as Array<Views or InputDelegates>;
     }
 
 }
