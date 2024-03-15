@@ -6,7 +6,7 @@ import Toybox.Communications;
 import Toybox.Timer;
 
 class OnlineVideoView extends WatchUi.View {
-    static const FRAME_COUNT = 60;
+    static const FRAME_COUNT = 71;
 
     var frameId as Number = 1;
     var frame as Graphics.BitmapReference or Null;
@@ -56,7 +56,7 @@ class OnlineVideoView extends WatchUi.View {
 
         var url = Lang.format(
             "https://raw.githubusercontent.com/sashjakk/garmin-dog/main/images/frame_$1$.jpg", 
-            [frameId.format("%04d")]
+            [frameId.format("%03d")]
         );
 
         var options = {  
