@@ -12,4 +12,9 @@ class AppDelegate extends WatchUi.BehaviorDelegate {
         WatchUi.pushView(menu, new MenuDelegate(), WatchUi.SLIDE_UP);
         return true;
     }
+
+    function onBack() as Boolean {
+        WatchUi.popView(WatchUi.SLIDE_DOWN);
+        return true;
+    }
 }

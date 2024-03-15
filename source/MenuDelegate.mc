@@ -10,14 +10,12 @@ class MenuDelegate extends WatchUi.Menu2InputDelegate {
 
     function onSelect(item as MenuItem) as Void {
         if (item.getId().equals("online")) {
-            WatchUi.switchToView(new OnlineVideoView(), new AppDelegate(), WatchUi.SLIDE_DOWN);
-            WatchUi.requestUpdate();
+            WatchUi.pushView(new OnlineVideoView(), new AppDelegate(), WatchUi.SLIDE_DOWN);
             return;
         }
         
         if (item.getId().equals("offline")) {
-            WatchUi.switchToView(new OfflineVideoView(), new AppDelegate(), WatchUi.SLIDE_DOWN);
-            WatchUi.requestUpdate();
+            WatchUi.pushView(new OfflineVideoView(), new AppDelegate(), WatchUi.SLIDE_DOWN);
             return;
         }
     }
